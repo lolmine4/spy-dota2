@@ -270,7 +270,7 @@ function rules() {
         <li>Все, кроме шпиона, видят одну карточку: героя или предмет из Доты. Шпион видит только то, что он шпион.</li>
         <li>Спрашиваете по очереди — порядок игра показывает на экране. Тот, чей ход, задаёт вопрос любому игроку и жмёт «Передать ход».</li>
         <li>Отвечайте так, чтобы свои поняли, что вы в теме, а шпион не догадался.</li>
-        <li>Подозреваете кого-то — запускайте голосование. Чтобы выгнать игрока, нужно больше половины голосов.</li>
+        <li>После трёх вопросов можно запустить голосование, если кого-то подозреваете. Чтобы выгнать игрока, нужно больше половины голосов.</li>
         <li>Выгнали шпиона — у шпиона минута на последнюю попытку назвать карточку. Выгнали своего — победа шпиона.</li>
         <li>Шпион может в любой момент нажать «Я знаю, что загадано» и назвать ответ. Ошибка — проигрыш.</li>
         <li>Кончилось время — сразу голосование. Не набрали большинства — победа шпиона.</li>
@@ -327,7 +327,7 @@ function roundPanel(st) {
       ${turnBlock(st)}
       ${failed ? '<p class="note">Голосование не набрало большинства — играем дальше.</p>' : ''}
       <div class="actions">
-        ${inRound ? '<button class="ghost" data-act="callVote">Начать голосование</button>' : ''}
+        ${inRound ? voteButton(r) : ''}
         ${spy ? `<button class="${S.guessing ? 'primary' : 'danger'}" data-act="guessMode">${S.guessing ? 'Отмена: не угадывать' : 'Я знаю, что загадано'}</button>` : ''}
       </div>`;
   } else if (st.phase === 'vote') {
@@ -362,6 +362,13 @@ function turnBlock(st) {
       <ol class="queue" aria-label="Очередь">${queue}</ol>
       ${canPass ? `<button class="${mine ? 'primary' : 'ghost small'}" data-act="passTurn">${mine ? 'Спросил — передать ход' : 'Передать ход дальше'}</button>` : ''}
     </div>`;
+}
+
+// Voting unlocks after a few questions; until then the button counts down instead.
+function voteButton(r) {
+  const left = r.voteAfter - r.asked;
+  if (left <= 0) return '<button class="ghost" data-act="callVote">Начать голосование</button>';
+  return `<button class="ghost" disabled>Голосование через ${left} ${left === 1 ? 'вопрос' : 'вопроса'}</button>`;
 }
 
 function votePanel(st) {

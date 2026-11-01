@@ -8,6 +8,8 @@ export const MAX_PLAYERS = 12;
 export const TWO_SPIES_FROM = 6;
 export const POOLS = ['heroes', 'items', 'mixed'];
 export const TIMERS = [0, 5, 8, 10];
+// Questions (turn passes) a round needs before anyone can call a vote, so it can't open on the first answer.
+export const VOTE_AFTER_QUESTIONS = 3;
 
 const NAME_MAX = 16;
 const LAST_GUESS_MS = 60_000;
@@ -170,6 +172,7 @@ export class Room {
       order: this.shuffle(ids),
       turn: 0,
       turnAt: 0,
+      asked: 0,
       endsAt: this.settings.minutes ? now + this.settings.minutes * 60_000 : null,
       ballots: null,
       voteBy: null,
@@ -206,11 +209,14 @@ export class Room {
     if (!allowed) throw new GameError('Сейчас не твой ход');
     r.turn = (r.turn + 1) % r.order.length;
     r.turnAt = this.now();
+    r.asked++;
   }
 
   callVote(by) {
     if (this.phase !== 'round') throw new GameError('Сейчас нельзя начать голосование');
     this.requireInRound(by);
+    const left = VOTE_AFTER_QUESTIONS - this.round.asked;
+    if (left > 0) throw new GameError(`Голосование откроется после ${VOTE_AFTER_QUESTIONS} вопросов, осталось ${left}`);
     this.openVote(by);
   }
 
@@ -375,6 +381,8 @@ export class Room {
       players: r.players,
       order: r.order,
       turn: r.turn,
+      asked: r.asked,
+      voteAfter: VOTE_AFTER_QUESTIONS,
       endsAt: r.endsAt,
       spyCount: r.spyIds.length,
       role: !inRound ? 'spectator' : spy ? 'spy' : 'agent',

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { buildCards, GameError, Room } from '../server/game.js';
+import { buildCards, GameError, Room, VOTE_AFTER_QUESTIONS } from '../server/game.js';
 
 const pool = {
   heroes: [
@@ -25,6 +25,14 @@ function setup(n = 4, settings = {}) {
   const host = ids[0];
   if (Object.keys(settings).length) room.setSettings(host, settings);
   return { room, ids, host, clock };
+}
+
+// Passes the turn enough times to unlock voting, waiting out the pass cooldown each time.
+function askQuestions(room, host, clock) {
+  for (let i = 0; i < VOTE_AFTER_QUESTIONS; i++) {
+    clock.advance(2000);
+    room.passTurn(host);
+  }
 }
 
 const spiesOf = (room) => room.round.spyIds;
@@ -161,8 +169,9 @@ describe('turn order', () => {
   });
 
   it('only moves during the question phase', () => {
-    const { room, host } = setup(3);
+    const { room, host, clock } = setup(3);
     room.start(host);
+    askQuestions(room, host, clock);
     room.callVote(host);
     assert.throws(() => room.passTurn(host), GameError);
   });
@@ -195,11 +204,28 @@ describe('spy guesses', () => {
 });
 
 describe('voting', () => {
+  it('opens only after three questions', () => {
+    const { room, host, clock } = setup(4);
+    room.start(host);
+    assert.throws(() => room.callVote(host), /осталось 3/);
+    for (let i = 0; i < 2; i++) {
+      clock.advance(2000);
+      room.passTurn(host);
+    }
+    assert.throws(() => room.callVote(host), /осталось 1/);
+    clock.advance(2000);
+    room.passTurn(host);
+    assert.equal(room.view(host).round.asked, 3);
+    room.callVote(host);
+    assert.equal(room.phase, 'vote');
+  });
+
   it('catching the spy gives them one last guess', () => {
-    const { room, host } = setup(4, { pool: 'items' });
+    const { room, host, clock } = setup(4, { pool: 'items' });
     room.start(host);
     const [spy] = spiesOf(room);
     const agents = agentsOf(room);
+    askQuestions(room, host, clock);
     room.callVote(agents[0]);
     for (const a of agents) room.vote(a, spy);
     room.vote(spy, agents[0]);
@@ -216,6 +242,7 @@ describe('voting', () => {
     room.start(host);
     const [spy] = spiesOf(room);
     const agents = agentsOf(room);
+    askQuestions(room, host, clock);
     room.callVote(spy);
     for (const a of agents) room.vote(a, spy);
     room.vote(spy, agents[0]);
@@ -225,10 +252,11 @@ describe('voting', () => {
   });
 
   it('convicting an agent wins for the spy', () => {
-    const { room, host } = setup(4);
+    const { room, host, clock } = setup(4);
     room.start(host);
     const [spy] = spiesOf(room);
     const [victim, ...rest] = agentsOf(room);
+    askQuestions(room, host, clock);
     room.callVote(victim);
     for (const a of [spy, ...rest]) room.vote(a, victim);
     room.vote(victim, spy);
@@ -237,9 +265,10 @@ describe('voting', () => {
   });
 
   it('without a majority play goes on', () => {
-    const { room, host } = setup(4);
+    const { room, host, clock } = setup(4);
     room.start(host);
     const [a, b, c, d] = room.round.players;
+    askQuestions(room, host, clock);
     room.callVote(a);
     room.vote(a, b);
     room.vote(b, a);
@@ -250,10 +279,11 @@ describe('voting', () => {
   });
 
   it('the host cannot force a conviction with one ballot', () => {
-    const { room, host } = setup(5);
+    const { room, host, clock } = setup(5);
     room.start(host);
     const [spy] = spiesOf(room);
     const voter = agentsOf(room)[0];
+    askQuestions(room, host, clock);
     room.callVote(voter);
     room.vote(voter, spy);
     room.finishVote(host);
@@ -273,10 +303,11 @@ describe('voting', () => {
   });
 
   it('does not wait for a player who went offline', () => {
-    const { room, host } = setup(4);
+    const { room, host, clock } = setup(4);
     room.start(host);
     const [spy] = spiesOf(room);
     const agents = agentsOf(room);
+    askQuestions(room, host, clock);
     room.callVote(agents[0]);
     for (const a of agents.slice(0, 2)) room.vote(a, spy);
     room.vote(spy, agents[0]);
@@ -286,8 +317,9 @@ describe('voting', () => {
   });
 
   it('you cannot vote for yourself', () => {
-    const { room, host, ids } = setup(3);
+    const { room, host, ids, clock } = setup(3);
     room.start(host);
+    askQuestions(room, host, clock);
     room.callVote(ids[0]);
     assert.throws(() => room.vote(ids[1], ids[1]), /себя/);
   });
