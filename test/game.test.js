@@ -96,6 +96,65 @@ describe('roles', () => {
   });
 });
 
+describe('turn order', () => {
+  it('puts every round player in line once, starting at the top', () => {
+    const { room, host } = setup(5);
+    room.start(host);
+    assert.deepEqual([...room.round.order].sort(), [...room.round.players].sort());
+    assert.equal(room.round.turn, 0);
+    assert.deepEqual(room.view(host).round.order, room.round.order);
+  });
+
+  it('only the player on turn or the host passes it, and it wraps around', () => {
+    const { room, host } = setup(3);
+    room.start(host);
+    const [first, second, third] = room.round.order;
+    const outsider = [second, third].find((id) => id !== host);
+    assert.throws(() => room.passTurn(outsider), /не твой ход/);
+    room.passTurn(first);
+    assert.equal(room.round.order[room.round.turn], second);
+    room.passTurn(host);
+    assert.equal(room.round.order[room.round.turn], third);
+    room.passTurn(third);
+    assert.equal(room.round.order[room.round.turn], first);
+  });
+
+  it('skips players who are offline', () => {
+    const { room, host } = setup(4);
+    room.start(host);
+    const [first, second, third] = room.round.order;
+    room.disconnect(second);
+    room.passTurn(first);
+    assert.equal(room.round.order[room.round.turn], third);
+  });
+
+  it('anyone in the round can pass for a player who dropped out', () => {
+    const { room, host } = setup(4);
+    room.start(host);
+    const [first, ...rest] = room.round.order;
+    const other = rest.find((id) => id !== host);
+    room.disconnect(first);
+    room.passTurn(other);
+    assert.equal(room.round.turn, 1);
+  });
+
+  it('ignores a pass from a stale turn so a double click skips nobody', () => {
+    const { room, host } = setup(3);
+    room.start(host);
+    const first = room.round.order[0];
+    room.passTurn(first, 0);
+    room.passTurn(host, 0);
+    assert.equal(room.round.turn, 1);
+  });
+
+  it('only moves during the question phase', () => {
+    const { room, host } = setup(3);
+    room.start(host);
+    room.callVote(host);
+    assert.throws(() => room.passTurn(host), GameError);
+  });
+});
+
 describe('spy guesses', () => {
   it('a right guess wins for the spy and scores 2', () => {
     const { room, host } = setup(4);

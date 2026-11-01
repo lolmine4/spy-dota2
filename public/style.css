@@ -457,6 +457,84 @@ input::placeholder {
   right: 10px;
 }
 
+.turn {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+}
+
+.turn.mine {
+  border-color: rgba(89, 185, 138, 0.6);
+  background: linear-gradient(90deg, var(--green-soft), transparent 80%), var(--panel-2);
+}
+
+.turn-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.turn.mine .turn-title {
+  color: var(--green);
+}
+
+.queue {
+  list-style: none;
+  margin: 2px 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.queue li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 10px 4px 4px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queue li span {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.queue li.now {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.queue li.now span {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.queue li.off {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

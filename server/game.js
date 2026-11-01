@@ -158,15 +158,16 @@ export class Room {
     const secret = fresh[Math.floor(this.rng() * fresh.length)];
     this.recent = [secret.id, ...this.recent].slice(0, RECENT_LIMIT);
 
-    const order = this.shuffle(ids);
     const spyCount = this.settings.spies === 2 && ids.length >= TWO_SPIES_FROM ? 2 : 1;
     const now = this.now();
     this.round = {
       no: ++this.roundNo,
       players: ids,
-      spyIds: order.slice(0, spyCount),
+      spyIds: this.shuffle(ids).slice(0, spyCount),
       secretId: secret.id,
-      firstId: ids[Math.floor(this.rng() * ids.length)],
+      // Its own shuffle: reusing the spy draw would always put a spy first in line.
+      order: this.shuffle(ids),
+      turn: 0,
       endsAt: this.settings.minutes ? now + this.settings.minutes * 60_000 : null,
       ballots: null,
       voteBy: null,
@@ -186,6 +187,25 @@ export class Room {
       [out[i], out[j]] = [out[j], out[i]];
     }
     return out;
+  }
+
+  // Passes the turn to the next player in line who is online. The player whose turn it is can do it,
+  // so can the host, and so can anyone in the round if that player dropped out.
+  // `fromTurn` is the turn the client saw, so two quick clicks can't skip someone.
+  passTurn(by, fromTurn) {
+    if (this.phase !== 'round') throw new GameError('Сейчас нельзя передать ход');
+    const r = this.round;
+    if (fromTurn !== undefined && fromTurn !== r.turn) return;
+    const current = r.order[r.turn];
+    const allowed = by === current || by === this.hostId || (r.players.includes(by) && !this.isOnline(current));
+    if (!allowed) throw new GameError('Сейчас не твой ход');
+    for (let step = 1; step <= r.order.length; step++) {
+      const i = (r.turn + step) % r.order.length;
+      if (this.isOnline(r.order[i])) {
+        r.turn = i;
+        return;
+      }
+    }
   }
 
   callVote(by) {
@@ -353,7 +373,8 @@ export class Room {
     out.round = {
       no: r.no,
       players: r.players,
-      firstId: r.firstId,
+      order: r.order,
+      turn: r.turn,
       endsAt: r.endsAt,
       spyCount: r.spyIds.length,
       role: !inRound ? 'spectator' : spy ? 'spy' : 'agent',

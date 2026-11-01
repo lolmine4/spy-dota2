@@ -258,7 +258,7 @@ function rules() {
       <summary>Как играть</summary>
       <ol>
         <li>Все, кроме шпиона, видят одну карточку: героя или предмет из Доты. Шпион видит только то, что он шпион.</li>
-        <li>По очереди задаёте друг другу вопросы про карточку. Первого спрашивающего выбирает игра, дальше спрашивает тот, кому только что задали вопрос.</li>
+        <li>Спрашиваете по очереди — порядок игра показывает на экране. Тот, чей ход, задаёт вопрос любому игроку и жмёт «Передать ход».</li>
         <li>Отвечайте так, чтобы свои поняли, что вы в теме, а шпион не догадался.</li>
         <li>Подозреваете кого-то — запускайте голосование. Чтобы выгнать игрока, нужно больше половины голосов.</li>
         <li>Выгнали шпиона — у шпиона минута на последнюю попытку назвать карточку. Выгнали своего — победа шпиона.</li>
@@ -308,13 +308,13 @@ function roundPanel(st) {
     <div class="status">
       <span>Раунд ${r.no}</span>
       ${r.endsAt && st.phase !== 'lastGuess' && !r.timeUp ? `<span class="timer" data-ends="${r.endsAt}"></span>` : ''}
-      <span>Первым спрашивает <b>${nameOf(r.firstId)}</b></span>
     </div>`;
 
   let body = '';
   if (st.phase === 'round') {
     const failed = r.lastVote && !r.lastVote.accusedId;
     body = `
+      ${turnBlock(st)}
       ${failed ? '<p class="note">Голосование не набрало большинства — играем дальше.</p>' : ''}
       <div class="actions">
         ${inRound ? '<button class="ghost" data-act="callVote">Начать голосование</button>' : ''}
@@ -333,6 +333,36 @@ function roundPanel(st) {
   }
 
   return `<section class="panel">${status}${roleCard(r)}${body}</section>`;
+}
+
+// Mirrors the server: the turn goes to the next player in line who is online.
+function nextInLine(r) {
+  for (let step = 1; step <= r.order.length; step++) {
+    const id = r.order[(r.turn + step) % r.order.length];
+    if (player(id)?.online) return id;
+  }
+  return r.order[r.turn];
+}
+
+function turnBlock(st) {
+  const r = st.round;
+  const nowId = r.order[r.turn];
+  const mine = nowId === st.me;
+  const nowOffline = !player(nowId)?.online;
+  const canPass = mine || isHost() || (r.role !== 'spectator' && nowOffline);
+  const queue = r.order
+    .map((id, i) => {
+      const cls = [id === nowId ? 'now' : '', player(id)?.online ? '' : 'off'].join(' ');
+      return `<li class="${cls}"><span>${i + 1}</span>${nameOf(id)}</li>`;
+    })
+    .join('');
+  return `
+    <div class="turn ${mine ? 'mine' : ''}">
+      <p class="turn-title">${mine ? 'Твой ход: задай вопрос любому игроку' : `Спрашивает <b>${nameOf(nowId)}</b>${nowOffline ? ' <span class="muted">(не в сети)</span>' : ''}`}</p>
+      <p class="muted small">Следующим спрашивает ${nameOf(nextInLine(r))}</p>
+      <ol class="queue" aria-label="Очередь">${queue}</ol>
+      ${canPass ? `<button class="${mine ? 'primary' : 'ghost small'}" data-act="passTurn">${mine ? 'Спросил — передать ход' : 'Передать ход дальше'}</button>` : ''}
+    </div>`;
 }
 
 function votePanel(st) {
@@ -554,6 +584,9 @@ const actions = {
   },
   start() {
     send('start');
+  },
+  passTurn() {
+    send('passTurn', { turn: S.state.round.turn });
   },
   callVote() {
     send('callVote');
