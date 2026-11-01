@@ -86,6 +86,15 @@ const fmtTime = (ms) => {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 };
 
+// Only touches the DOM when the markup changed, so a state update that doesn't affect a section
+// doesn't swap its buttons out from under a finger mid-tap.
+const painted = new Map();
+function paint(id, html) {
+  if (painted.get(id) === html) return;
+  painted.set(id, html);
+  $(id).innerHTML = html;
+}
+
 function setUrl(code) {
   history.replaceState(null, '', code ? `/?room=${code}` : '/');
 }
@@ -98,7 +107,7 @@ function roomLink() {
 
 function renderHome(prefillCode = '') {
   $('game').hidden = true;
-  $('bar-room').innerHTML = '';
+  paint('bar-room', '');
   const home = $('home');
   home.hidden = false;
   home.innerHTML = `
@@ -180,9 +189,11 @@ function render() {
   if (!st) return;
   $('home').hidden = true;
   $('game').hidden = false;
-  $('bar-room').innerHTML = `
-    <button class="chip" data-act="copy" title="Скопировать ссылку">Комната <b>${esc(st.code)}</b></button>
-    <button class="ghost small" data-act="leave">Выйти</button>`;
+  paint(
+    'bar-room',
+    `<button class="chip" data-act="copy" title="Скопировать ссылку">Комната <b>${esc(st.code)}</b></button>
+     <button class="ghost small" data-act="leave">Выйти</button>`,
+  );
 
   const r = st.round;
   if (r && S.cardShownRound !== null && S.cardShownRound !== r.no) S.cardShownRound = null;
@@ -190,9 +201,8 @@ function render() {
   if (st.phase === 'lastGuess' && r.lastGuessBy === st.me) S.guessing = true;
   if (!S.guessing) closeSheet();
 
-  $('panel').innerHTML =
-    st.phase === 'lobby' ? lobbyPanel(st) : st.phase === 'result' ? resultPanel(st) : roundPanel(st);
-  $('players').innerHTML = playersPanel(st);
+  paint('panel', st.phase === 'lobby' ? lobbyPanel(st) : st.phase === 'result' ? resultPanel(st) : roundPanel(st));
+  paint('players', playersPanel(st));
   renderBoard();
   tickTimers();
 }
@@ -335,31 +345,20 @@ function roundPanel(st) {
   return `<section class="panel">${status}${roleCard(r)}${body}</section>`;
 }
 
-// Mirrors the server: the turn goes to the next player in line who is online.
-function nextInLine(r) {
-  for (let step = 1; step <= r.order.length; step++) {
-    const id = r.order[(r.turn + step) % r.order.length];
-    if (player(id)?.online) return id;
-  }
-  return r.order[r.turn];
-}
-
 function turnBlock(st) {
   const r = st.round;
   const nowId = r.order[r.turn];
+  const nextId = r.order[(r.turn + 1) % r.order.length];
   const mine = nowId === st.me;
   const nowOffline = !player(nowId)?.online;
   const canPass = mine || isHost() || (r.role !== 'spectator' && nowOffline);
   const queue = r.order
-    .map((id, i) => {
-      const cls = [id === nowId ? 'now' : '', player(id)?.online ? '' : 'off'].join(' ');
-      return `<li class="${cls}"><span>${i + 1}</span>${nameOf(id)}</li>`;
-    })
+    .map((id, i) => `<li class="${id === nowId ? 'now' : ''}"><span>${i + 1}</span>${nameOf(id)}</li>`)
     .join('');
   return `
     <div class="turn ${mine ? 'mine' : ''}">
       <p class="turn-title">${mine ? 'Твой ход: задай вопрос любому игроку' : `Спрашивает <b>${nameOf(nowId)}</b>${nowOffline ? ' <span class="muted">(не в сети)</span>' : ''}`}</p>
-      <p class="muted small">Следующим спрашивает ${nameOf(nextInLine(r))}</p>
+      <p class="muted small">Следующим спрашивает ${nameOf(nextId)}</p>
       <ol class="queue" aria-label="Очередь">${queue}</ol>
       ${canPass ? `<button class="${mine ? 'primary' : 'ghost small'}" data-act="passTurn">${mine ? 'Спросил — передать ход' : 'Передать ход дальше'}</button>` : ''}
     </div>`;
@@ -585,8 +584,17 @@ const actions = {
   start() {
     send('start');
   },
-  passTurn() {
-    send('passTurn', { turn: S.state.round.turn });
+  // The server answers in a few hundred ms on Render; until then the button shows it was pressed
+  // and can't be pressed again.
+  async passTurn(el) {
+    const before = S.state.round.turn;
+    el.disabled = true;
+    el.textContent = 'Передаю ход…';
+    const res = await send('passTurn', { turn: before });
+    const r = S.state?.round;
+    if (res && r && r.turn !== before) toast(`Ход передан. Спрашивает ${player(r.order[r.turn])?.name ?? 'следующий'}`);
+    painted.delete('panel');
+    if (S.state) render();
   },
   callVote() {
     send('callVote');

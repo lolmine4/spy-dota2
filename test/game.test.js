@@ -106,26 +106,39 @@ describe('turn order', () => {
   });
 
   it('only the player on turn or the host passes it, and it wraps around', () => {
-    const { room, host } = setup(3);
+    const { room, host, clock } = setup(3);
     room.start(host);
     const [first, second, third] = room.round.order;
     const outsider = [second, third].find((id) => id !== host);
     assert.throws(() => room.passTurn(outsider), /не твой ход/);
     room.passTurn(first);
     assert.equal(room.round.order[room.round.turn], second);
+    clock.advance(2000);
     room.passTurn(host);
     assert.equal(room.round.order[room.round.turn], third);
+    clock.advance(2000);
     room.passTurn(third);
     assert.equal(room.round.order[room.round.turn], first);
   });
 
-  it('skips players who are offline', () => {
+  it('keeps offline players in line, since a phone in Discord shows as offline', () => {
     const { room, host } = setup(4);
     room.start(host);
-    const [first, second, third] = room.round.order;
+    const [first, second] = room.round.order;
     room.disconnect(second);
     room.passTurn(first);
-    assert.equal(room.round.order[room.round.turn], third);
+    assert.equal(room.round.order[room.round.turn], second);
+  });
+
+  it('ignores a second pass right after the first, even with the fresh turn', () => {
+    const { room, host, clock } = setup(3);
+    room.start(host);
+    room.passTurn(room.round.order[0]);
+    room.passTurn(host, 1);
+    assert.equal(room.round.turn, 1);
+    clock.advance(1600);
+    room.passTurn(host, 1);
+    assert.equal(room.round.turn, 2);
   });
 
   it('anyone in the round can pass for a player who dropped out', () => {

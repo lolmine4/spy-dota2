@@ -530,11 +530,6 @@ input::placeholder {
   color: var(--text);
 }
 
-.queue li.off {
-  color: var(--muted);
-  text-decoration: line-through;
-}
-
 .actions {
   display: flex;
   flex-wrap: wrap;

@@ -11,6 +11,7 @@ export const TIMERS = [0, 5, 8, 10];
 
 const NAME_MAX = 16;
 const LAST_GUESS_MS = 60_000;
+const TURN_COOLDOWN_MS = 1500;
 const HOST_GRACE_MS = 20_000;
 const OFFLINE_DROP_MS = 5 * 60_000;
 const IDLE_ROOM_MS = 30 * 60_000;
@@ -168,6 +169,7 @@ export class Room {
       // Its own shuffle: reusing the spy draw would always put a spy first in line.
       order: this.shuffle(ids),
       turn: 0,
+      turnAt: 0,
       endsAt: this.settings.minutes ? now + this.settings.minutes * 60_000 : null,
       ballots: null,
       voteBy: null,
@@ -189,23 +191,21 @@ export class Room {
     return out;
   }
 
-  // Passes the turn to the next player in line who is online. The player whose turn it is can do it,
-  // so can the host, and so can anyone in the round if that player dropped out.
-  // `fromTurn` is the turn the client saw, so two quick clicks can't skip someone.
+  // Passes the turn to the next player in line. The player whose turn it is can do it, so can the host,
+  // and so can anyone in the round while that player is offline. Offline players keep their place:
+  // on a phone "offline" usually just means the browser is in the background behind Discord.
+  // `fromTurn` is the turn the client saw; it and the cooldown stop a double tap, or two players
+  // clicking at once, from skipping someone.
   passTurn(by, fromTurn) {
     if (this.phase !== 'round') throw new GameError('Сейчас нельзя передать ход');
     const r = this.round;
     if (fromTurn !== undefined && fromTurn !== r.turn) return;
+    if (this.now() - r.turnAt < TURN_COOLDOWN_MS) return;
     const current = r.order[r.turn];
     const allowed = by === current || by === this.hostId || (r.players.includes(by) && !this.isOnline(current));
     if (!allowed) throw new GameError('Сейчас не твой ход');
-    for (let step = 1; step <= r.order.length; step++) {
-      const i = (r.turn + step) % r.order.length;
-      if (this.isOnline(r.order[i])) {
-        r.turn = i;
-        return;
-      }
-    }
+    r.turn = (r.turn + 1) % r.order.length;
+    r.turnAt = this.now();
   }
 
   callVote(by) {
