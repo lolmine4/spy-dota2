@@ -17,7 +17,9 @@ const TURN_COOLDOWN_MS = 1500;
 const HOST_GRACE_MS = 20_000;
 const OFFLINE_DROP_MS = 5 * 60_000;
 const IDLE_ROOM_MS = 30 * 60_000;
-const RECENT_LIMIT = 40;
+const RECENT_LIMIT = 400;
+const HISTORY_LIMIT = 400;
+const SKIP_SHARE = 0.75;
 const ACTIVE = ['round', 'vote', 'lastGuess'];
 
 // Cards are keyed "h:<hero>" and "i:<item>", the same ids the client uses for images.
@@ -148,7 +150,8 @@ export class Room {
     this.removePlayer(target);
   }
 
-  start(by) {
+  // `history` is the host's list of past secrets, newest first, kept in their browser.
+  start(by, history = []) {
     this.requireHost(by);
     if (ACTIVE.includes(this.phase)) throw new GameError('Раунд уже идёт');
     const ids = [...this.players.values()].filter((p) => p.sockets > 0).map((p) => p.id);
@@ -156,9 +159,7 @@ export class Room {
 
     const kinds = { heroes: ['hero'], items: ['item'], mixed: ['hero', 'item'] }[this.settings.pool];
     const all = [...this.cards.values()].filter((c) => kinds.includes(c.kind));
-    let fresh = all.filter((c) => !this.recent.includes(c.id));
-    if (!fresh.length) fresh = all;
-    const secret = fresh[Math.floor(this.rng() * fresh.length)];
+    const secret = this.pickSecret(all, history);
     this.recent = [secret.id, ...this.recent].slice(0, RECENT_LIMIT);
 
     const spyCount = this.settings.spies === 2 && ids.length >= TWO_SPIES_FROM ? 2 : 1;
@@ -183,6 +184,22 @@ export class Room {
       result: null,
     };
     this.phase = 'round';
+  }
+
+  // Skips whatever came up lately: this room's rounds, then the host's own history, which outlives
+  // rooms and server restarts (Render's free tier sleeps and every deploy restarts it). The newest
+  // three quarters of the pool are skipped at most, so there is always a real choice left.
+  pickSecret(all, history) {
+    const inPool = new Set(all.map((c) => c.id));
+    const past = Array.isArray(history) ? history.slice(0, HISTORY_LIMIT) : [];
+    const limit = Math.floor(all.length * SKIP_SHARE);
+    const skip = new Set();
+    for (const id of [...this.recent, ...past]) {
+      if (skip.size >= limit) break;
+      if (typeof id === 'string' && inPool.has(id)) skip.add(id);
+    }
+    const fresh = all.filter((c) => !skip.has(c.id));
+    return fresh[Math.floor(this.rng() * fresh.length)];
   }
 
   shuffle(list) {

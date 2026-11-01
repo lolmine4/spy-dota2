@@ -28,7 +28,8 @@ app.use(
 );
 
 const httpServer = createServer(app);
-const io = new Server(httpServer, { maxHttpBufferSize: 10_000 });
+// Room for the host's card history on "start" (a few hundred short ids).
+const io = new Server(httpServer, { maxHttpBufferSize: 20_000 });
 
 function newCode() {
   for (;;) {
@@ -132,7 +133,7 @@ io.on('connection', (socket) => {
   });
 
   act('settings', (room, by, patch) => room.setSettings(by, patch));
-  act('start', (room, by) => room.start(by));
+  act('start', (room, by, { history }) => room.start(by, history));
   act('passTurn', (room, by, { turn }) => room.passTurn(by, turn));
   act('callVote', (room, by) => room.callVote(by));
   act('vote', (room, by, { target }) => room.vote(by, target));

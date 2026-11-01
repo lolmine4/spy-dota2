@@ -25,6 +25,27 @@ const store = {
   },
 };
 
+// Past secrets, newest first. Every player keeps them, so whoever hosts next can ask the server
+// to skip cards the group has already played, even in a new room or after the server restarted.
+const HISTORY_KEY = 'spy.history';
+const HISTORY_MAX = 250;
+
+// Not named `history`: that would shadow window.history, which setUrl needs.
+function pastCards() {
+  try {
+    const list = JSON.parse(store.get(HISTORY_KEY) || '[]');
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+function rememberCard(cardId) {
+  const list = pastCards();
+  if (list[0] === cardId) return;
+  store.set(HISTORY_KEY, JSON.stringify([cardId, ...list.filter((id) => id !== cardId)].slice(0, HISTORY_MAX)));
+}
+
 function newToken() {
   return [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
@@ -157,6 +178,7 @@ async function enterRoom(event, code) {
 }
 
 function applyState(state) {
+  if (state.phase === 'result' && state.round?.card) rememberCard(state.round.card.id);
   S.state = state;
   S.offset = state.serverNow - Date.now();
   render();
@@ -589,7 +611,7 @@ const actions = {
     send('kick', { target: el.dataset.id });
   },
   start() {
-    send('start');
+    send('start', { history: pastCards() });
   },
   // The server answers in a few hundred ms on Render; until then the button shows it was pressed
   // and can't be pressed again.

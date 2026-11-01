@@ -177,6 +177,54 @@ describe('turn order', () => {
   });
 });
 
+describe('secret draw', () => {
+  it("skips the host's history from earlier rooms", () => {
+    const { room, host } = setup(3, { pool: 'heroes' });
+    room.start(host, ['h:pudge', 'h:axe']);
+    assert.equal(room.round.secretId, 'h:lina');
+  });
+
+  it('never skips more than three quarters of the pool', () => {
+    const { room, host } = setup(3, { pool: 'heroes' });
+    // Three heroes: only the newest two can be skipped, so the oldest comes back.
+    room.start(host, ['h:pudge', 'h:axe', 'h:lina']);
+    assert.equal(room.round.secretId, 'h:lina');
+  });
+
+  it("puts this room's rounds ahead of the sent history", () => {
+    const { room, host } = setup(3, { pool: 'heroes' });
+    room.start(host, ['h:pudge', 'h:axe']);
+    room.guess(spiesOf(room)[0], 'i:black_king_bar');
+    // Lina was just played here, so with Pudge it fills the skip window and Axe comes back.
+    room.start(host, ['h:pudge', 'h:axe']);
+    assert.equal(room.round.secretId, 'h:axe');
+  });
+
+  it('shrugs off junk in the history', () => {
+    const { room, host } = setup(3, { pool: 'heroes' });
+    room.start(host, [42, null, { id: 'h:pudge' }, 'h:nobody', 'i:black_king_bar']);
+    assert.ok(room.round.secretId.startsWith('h:'));
+    const other = setup(3);
+    other.room.start(other.host, 'not a list');
+    assert.ok(other.room.round.secretId);
+  });
+
+  it('spreads draws over the whole pool instead of repeating', () => {
+    const big = { heroes: Array.from({ length: 100 }, (_, i) => ({ id: `x${i}`, name: `X${i}` })), items: [] };
+    const room = new Room('BIGP', buildCards(big));
+    const host = room.join('token-big-host-xxxxxxxx', 'Host');
+    room.connect(host);
+    for (const name of ['A', 'B']) room.connect(room.join(`token-big-${name}-xxxxxxxx`, name));
+    const seen = [];
+    for (let i = 0; i < 75; i++) {
+      room.start(host);
+      seen.push(room.round.secretId);
+      room.guess(room.round.spyIds[0], room.round.secretId === 'h:x0' ? 'h:x1' : 'h:x0');
+    }
+    assert.equal(new Set(seen).size, 75);
+  });
+});
+
 describe('spy guesses', () => {
   it('a right guess wins for the spy and scores 2', () => {
     const { room, host } = setup(4);
