@@ -1,0 +1,1370 @@
+{
+ "updated": "2026-11-01",
+ "heroes": [
+  {
+   "id": "abaddon",
+   "name": "Abaddon",
+   "attr": "all"
+  },
+  {
+   "id": "alchemist",
+   "name": "Alchemist",
+   "attr": "str"
+  },
+  {
+   "id": "ancient_apparition",
+   "name": "Ancient Apparition",
+   "attr": "int"
+  },
+  {
+   "id": "antimage",
+   "name": "Anti-Mage",
+   "attr": "agi"
+  },
+  {
+   "id": "arc_warden",
+   "name": "Arc Warden",
+   "attr": "all"
+  },
+  {
+   "id": "axe",
+   "name": "Axe",
+   "attr": "str"
+  },
+  {
+   "id": "bane",
+   "name": "Bane",
+   "attr": "all"
+  },
+  {
+   "id": "batrider",
+   "name": "Batrider",
+   "attr": "all"
+  },
+  {
+   "id": "beastmaster",
+   "name": "Beastmaster",
+   "attr": "all"
+  },
+  {
+   "id": "bloodseeker",
+   "name": "Bloodseeker",
+   "attr": "agi"
+  },
+  {
+   "id": "bounty_hunter",
+   "name": "Bounty Hunter",
+   "attr": "agi"
+  },
+  {
+   "id": "brewmaster",
+   "name": "Brewmaster",
+   "attr": "all"
+  },
+  {
+   "id": "bristleback",
+   "name": "Bristleback",
+   "attr": "str"
+  },
+  {
+   "id": "broodmother",
+   "name": "Broodmother",
+   "attr": "agi"
+  },
+  {
+   "id": "centaur",
+   "name": "Centaur Warrunner",
+   "attr": "str"
+  },
+  {
+   "id": "chaos_knight",
+   "name": "Chaos Knight",
+   "attr": "str"
+  },
+  {
+   "id": "chen",
+   "name": "Chen",
+   "attr": "int"
+  },
+  {
+   "id": "clinkz",
+   "name": "Clinkz",
+   "attr": "agi"
+  },
+  {
+   "id": "rattletrap",
+   "name": "Clockwerk",
+   "attr": "str"
+  },
+  {
+   "id": "crystal_maiden",
+   "name": "Crystal Maiden",
+   "attr": "int"
+  },
+  {
+   "id": "dark_seer",
+   "name": "Dark Seer",
+   "attr": "int"
+  },
+  {
+   "id": "dark_willow",
+   "name": "Dark Willow",
+   "attr": "int"
+  },
+  {
+   "id": "dawnbreaker",
+   "name": "Dawnbreaker",
+   "attr": "str"
+  },
+  {
+   "id": "dazzle",
+   "name": "Dazzle",
+   "attr": "all"
+  },
+  {
+   "id": "death_prophet",
+   "name": "Death Prophet",
+   "attr": "all"
+  },
+  {
+   "id": "disruptor",
+   "name": "Disruptor",
+   "attr": "int"
+  },
+  {
+   "id": "doom_bringer",
+   "name": "Doom",
+   "attr": "str"
+  },
+  {
+   "id": "dragon_knight",
+   "name": "Dragon Knight",
+   "attr": "str"
+  },
+  {
+   "id": "drow_ranger",
+   "name": "Drow Ranger",
+   "attr": "agi"
+  },
+  {
+   "id": "earth_spirit",
+   "name": "Earth Spirit",
+   "attr": "str"
+  },
+  {
+   "id": "earthshaker",
+   "name": "Earthshaker",
+   "attr": "str"
+  },
+  {
+   "id": "elder_titan",
+   "name": "Elder Titan",
+   "attr": "str"
+  },
+  {
+   "id": "ember_spirit",
+   "name": "Ember Spirit",
+   "attr": "agi"
+  },
+  {
+   "id": "enchantress",
+   "name": "Enchantress",
+   "attr": "int"
+  },
+  {
+   "id": "enigma",
+   "name": "Enigma",
+   "attr": "all"
+  },
+  {
+   "id": "faceless_void",
+   "name": "Faceless Void",
+   "attr": "agi"
+  },
+  {
+   "id": "grimstroke",
+   "name": "Grimstroke",
+   "attr": "int"
+  },
+  {
+   "id": "gyrocopter",
+   "name": "Gyrocopter",
+   "attr": "agi"
+  },
+  {
+   "id": "hoodwink",
+   "name": "Hoodwink",
+   "attr": "agi"
+  },
+  {
+   "id": "huskar",
+   "name": "Huskar",
+   "attr": "str"
+  },
+  {
+   "id": "invoker",
+   "name": "Invoker",
+   "attr": "int"
+  },
+  {
+   "id": "wisp",
+   "name": "Io",
+   "attr": "all"
+  },
+  {
+   "id": "jakiro",
+   "name": "Jakiro",
+   "attr": "int"
+  },
+  {
+   "id": "juggernaut",
+   "name": "Juggernaut",
+   "attr": "agi"
+  },
+  {
+   "id": "keeper_of_the_light",
+   "name": "Keeper of the Light",
+   "attr": "int"
+  },
+  {
+   "id": "kez",
+   "name": "Kez",
+   "attr": "agi"
+  },
+  {
+   "id": "kunkka",
+   "name": "Kunkka",
+   "attr": "str"
+  },
+  {
+   "id": "largo",
+   "name": "Largo",
+   "attr": "str"
+  },
+  {
+   "id": "legion_commander",
+   "name": "Legion Commander",
+   "attr": "str"
+  },
+  {
+   "id": "leshrac",
+   "name": "Leshrac",
+   "attr": "int"
+  },
+  {
+   "id": "lich",
+   "name": "Lich",
+   "attr": "int"
+  },
+  {
+   "id": "life_stealer",
+   "name": "Lifestealer",
+   "attr": "str"
+  },
+  {
+   "id": "lina",
+   "name": "Lina",
+   "attr": "int"
+  },
+  {
+   "id": "lion",
+   "name": "Lion",
+   "attr": "int"
+  },
+  {
+   "id": "lone_druid",
+   "name": "Lone Druid",
+   "attr": "agi"
+  },
+  {
+   "id": "luna",
+   "name": "Luna",
+   "attr": "agi"
+  },
+  {
+   "id": "lycan",
+   "name": "Lycan",
+   "attr": "str"
+  },
+  {
+   "id": "magnataur",
+   "name": "Magnus",
+   "attr": "all"
+  },
+  {
+   "id": "marci",
+   "name": "Marci",
+   "attr": "all"
+  },
+  {
+   "id": "mars",
+   "name": "Mars",
+   "attr": "str"
+  },
+  {
+   "id": "medusa",
+   "name": "Medusa",
+   "attr": "agi"
+  },
+  {
+   "id": "meepo",
+   "name": "Meepo",
+   "attr": "agi"
+  },
+  {
+   "id": "mirana",
+   "name": "Mirana",
+   "attr": "agi"
+  },
+  {
+   "id": "monkey_king",
+   "name": "Monkey King",
+   "attr": "agi"
+  },
+  {
+   "id": "morphling",
+   "name": "Morphling",
+   "attr": "agi"
+  },
+  {
+   "id": "muerta",
+   "name": "Muerta",
+   "attr": "int"
+  },
+  {
+   "id": "naga_siren",
+   "name": "Naga Siren",
+   "attr": "agi"
+  },
+  {
+   "id": "furion",
+   "name": "Nature's Prophet",
+   "attr": "all"
+  },
+  {
+   "id": "necrolyte",
+   "name": "Necrophos",
+   "attr": "int"
+  },
+  {
+   "id": "night_stalker",
+   "name": "Night Stalker",
+   "attr": "str"
+  },
+  {
+   "id": "nyx_assassin",
+   "name": "Nyx Assassin",
+   "attr": "all"
+  },
+  {
+   "id": "ogre_magi",
+   "name": "Ogre Magi",
+   "attr": "str"
+  },
+  {
+   "id": "omniknight",
+   "name": "Omniknight",
+   "attr": "str"
+  },
+  {
+   "id": "oracle",
+   "name": "Oracle",
+   "attr": "int"
+  },
+  {
+   "id": "obsidian_destroyer",
+   "name": "Outworld Destroyer",
+   "attr": "int"
+  },
+  {
+   "id": "pangolier",
+   "name": "Pangolier",
+   "attr": "all"
+  },
+  {
+   "id": "phantom_assassin",
+   "name": "Phantom Assassin",
+   "attr": "agi"
+  },
+  {
+   "id": "phantom_lancer",
+   "name": "Phantom Lancer",
+   "attr": "agi"
+  },
+  {
+   "id": "phoenix",
+   "name": "Phoenix",
+   "attr": "str"
+  },
+  {
+   "id": "primal_beast",
+   "name": "Primal Beast",
+   "attr": "str"
+  },
+  {
+   "id": "puck",
+   "name": "Puck",
+   "attr": "int"
+  },
+  {
+   "id": "pudge",
+   "name": "Pudge",
+   "attr": "str"
+  },
+  {
+   "id": "pugna",
+   "name": "Pugna",
+   "attr": "int"
+  },
+  {
+   "id": "queenofpain",
+   "name": "Queen of Pain",
+   "attr": "int"
+  },
+  {
+   "id": "razor",
+   "name": "Razor",
+   "attr": "agi"
+  },
+  {
+   "id": "riki",
+   "name": "Riki",
+   "attr": "agi"
+  },
+  {
+   "id": "ringmaster",
+   "name": "Ringmaster",
+   "attr": "int"
+  },
+  {
+   "id": "rubick",
+   "name": "Rubick",
+   "attr": "int"
+  },
+  {
+   "id": "sand_king",
+   "name": "Sand King",
+   "attr": "all"
+  },
+  {
+   "id": "shadow_demon",
+   "name": "Shadow Demon",
+   "attr": "int"
+  },
+  {
+   "id": "nevermore",
+   "name": "Shadow Fiend",
+   "attr": "agi"
+  },
+  {
+   "id": "shadow_shaman",
+   "name": "Shadow Shaman",
+   "attr": "int"
+  },
+  {
+   "id": "silencer",
+   "name": "Silencer",
+   "attr": "int"
+  },
+  {
+   "id": "skywrath_mage",
+   "name": "Skywrath Mage",
+   "attr": "int"
+  },
+  {
+   "id": "slardar",
+   "name": "Slardar",
+   "attr": "str"
+  },
+  {
+   "id": "slark",
+   "name": "Slark",
+   "attr": "agi"
+  },
+  {
+   "id": "snapfire",
+   "name": "Snapfire",
+   "attr": "all"
+  },
+  {
+   "id": "sniper",
+   "name": "Sniper",
+   "attr": "agi"
+  },
+  {
+   "id": "spectre",
+   "name": "Spectre",
+   "attr": "agi"
+  },
+  {
+   "id": "spirit_breaker",
+   "name": "Spirit Breaker",
+   "attr": "str"
+  },
+  {
+   "id": "storm_spirit",
+   "name": "Storm Spirit",
+   "attr": "int"
+  },
+  {
+   "id": "sven",
+   "name": "Sven",
+   "attr": "str"
+  },
+  {
+   "id": "techies",
+   "name": "Techies",
+   "attr": "all"
+  },
+  {
+   "id": "templar_assassin",
+   "name": "Templar Assassin",
+   "attr": "agi"
+  },
+  {
+   "id": "terrorblade",
+   "name": "Terrorblade",
+   "attr": "agi"
+  },
+  {
+   "id": "tidehunter",
+   "name": "Tidehunter",
+   "attr": "str"
+  },
+  {
+   "id": "shredder",
+   "name": "Timbersaw",
+   "attr": "str"
+  },
+  {
+   "id": "tinker",
+   "name": "Tinker",
+   "attr": "int"
+  },
+  {
+   "id": "tiny",
+   "name": "Tiny",
+   "attr": "str"
+  },
+  {
+   "id": "treant",
+   "name": "Treant Protector",
+   "attr": "str"
+  },
+  {
+   "id": "troll_warlord",
+   "name": "Troll Warlord",
+   "attr": "agi"
+  },
+  {
+   "id": "tusk",
+   "name": "Tusk",
+   "attr": "str"
+  },
+  {
+   "id": "abyssal_underlord",
+   "name": "Underlord",
+   "attr": "str"
+  },
+  {
+   "id": "undying",
+   "name": "Undying",
+   "attr": "str"
+  },
+  {
+   "id": "ursa",
+   "name": "Ursa",
+   "attr": "agi"
+  },
+  {
+   "id": "vengefulspirit",
+   "name": "Vengeful Spirit",
+   "attr": "agi"
+  },
+  {
+   "id": "venomancer",
+   "name": "Venomancer",
+   "attr": "all"
+  },
+  {
+   "id": "viper",
+   "name": "Viper",
+   "attr": "agi"
+  },
+  {
+   "id": "visage",
+   "name": "Visage",
+   "attr": "all"
+  },
+  {
+   "id": "void_spirit",
+   "name": "Void Spirit",
+   "attr": "all"
+  },
+  {
+   "id": "warlock",
+   "name": "Warlock",
+   "attr": "int"
+  },
+  {
+   "id": "weaver",
+   "name": "Weaver",
+   "attr": "agi"
+  },
+  {
+   "id": "windrunner",
+   "name": "Windranger",
+   "attr": "all"
+  },
+  {
+   "id": "winter_wyvern",
+   "name": "Winter Wyvern",
+   "attr": "int"
+  },
+  {
+   "id": "witch_doctor",
+   "name": "Witch Doctor",
+   "attr": "int"
+  },
+  {
+   "id": "skeleton_king",
+   "name": "Wraith King",
+   "attr": "str"
+  },
+  {
+   "id": "zuus",
+   "name": "Zeus",
+   "attr": "int"
+  }
+ ],
+ "items": [
+  {
+   "id": "tpscroll",
+   "name": "Town Portal Scroll"
+  },
+  {
+   "id": "clarity",
+   "name": "Clarity"
+  },
+  {
+   "id": "faerie_fire",
+   "name": "Faerie Fire"
+  },
+  {
+   "id": "smoke_of_deceit",
+   "name": "Smoke of Deceit"
+  },
+  {
+   "id": "ward_observer",
+   "name": "Observer Ward"
+  },
+  {
+   "id": "ward_sentry",
+   "name": "Sentry Ward"
+  },
+  {
+   "id": "enchanted_mango",
+   "name": "Enchanted Mango"
+  },
+  {
+   "id": "flask",
+   "name": "Healing Salve"
+  },
+  {
+   "id": "tango",
+   "name": "Tango"
+  },
+  {
+   "id": "blood_grenade",
+   "name": "Blood Grenade"
+  },
+  {
+   "id": "dust",
+   "name": "Dust of Appearance"
+  },
+  {
+   "id": "bottle",
+   "name": "Bottle"
+  },
+  {
+   "id": "infused_raindrop",
+   "name": "Infused Raindrops"
+  },
+  {
+   "id": "aghanims_shard",
+   "name": "Aghanim's Shard"
+  },
+  {
+   "id": "branches",
+   "name": "Iron Branch"
+  },
+  {
+   "id": "gauntlets",
+   "name": "Gauntlets of Strength"
+  },
+  {
+   "id": "slippers",
+   "name": "Slippers of Agility"
+  },
+  {
+   "id": "mantle",
+   "name": "Mantle of Intelligence"
+  },
+  {
+   "id": "circlet",
+   "name": "Circlet"
+  },
+  {
+   "id": "belt_of_strength",
+   "name": "Belt of Strength"
+  },
+  {
+   "id": "boots_of_elves",
+   "name": "Band of Elvenskin"
+  },
+  {
+   "id": "robe",
+   "name": "Robe of the Magi"
+  },
+  {
+   "id": "crown",
+   "name": "Crown"
+  },
+  {
+   "id": "ogre_axe",
+   "name": "Ogre Axe"
+  },
+  {
+   "id": "blade_of_alacrity",
+   "name": "Blade of Alacrity"
+  },
+  {
+   "id": "staff_of_wizardry",
+   "name": "Staff of Wizardry"
+  },
+  {
+   "id": "diadem",
+   "name": "Diadem"
+  },
+  {
+   "id": "ghost",
+   "name": "Ghost Scepter"
+  },
+  {
+   "id": "quelling_blade",
+   "name": "Quelling Blade"
+  },
+  {
+   "id": "ring_of_protection",
+   "name": "Ring of Protection"
+  },
+  {
+   "id": "blades_of_attack",
+   "name": "Blades of Attack"
+  },
+  {
+   "id": "orb_of_frost",
+   "name": "Orb of Frost"
+  },
+  {
+   "id": "gloves",
+   "name": "Gloves of Haste"
+  },
+  {
+   "id": "chainmail",
+   "name": "Chainmail"
+  },
+  {
+   "id": "broadsword",
+   "name": "Broadsword"
+  },
+  {
+   "id": "blight_stone",
+   "name": "Orb of Blight"
+  },
+  {
+   "id": "blitz_knuckles",
+   "name": "Blitz Knuckles"
+  },
+  {
+   "id": "splintmail",
+   "name": "Splintmail"
+  },
+  {
+   "id": "claymore",
+   "name": "Claymore"
+  },
+  {
+   "id": "orb_of_venom",
+   "name": "Orb of Venom"
+  },
+  {
+   "id": "javelin",
+   "name": "Javelin"
+  },
+  {
+   "id": "helm_of_iron_will",
+   "name": "Helm of Iron Will"
+  },
+  {
+   "id": "mithril_hammer",
+   "name": "Mithril Hammer"
+  },
+  {
+   "id": "ring_of_regen",
+   "name": "Ring of Regen"
+  },
+  {
+   "id": "sobi_mask",
+   "name": "Sage's Mask"
+  },
+  {
+   "id": "wind_lace",
+   "name": "Wind Lace"
+  },
+  {
+   "id": "magic_stick",
+   "name": "Magic Stick"
+  },
+  {
+   "id": "fluffy_hat",
+   "name": "Fluffy Hat"
+  },
+  {
+   "id": "wizard_hat",
+   "name": "Wizard Hat"
+  },
+  {
+   "id": "boots",
+   "name": "Boots of Speed"
+  },
+  {
+   "id": "voodoo_mask",
+   "name": "Voodoo Mask"
+  },
+  {
+   "id": "shawl",
+   "name": "Shawl"
+  },
+  {
+   "id": "shadow_amulet",
+   "name": "Shadow Amulet"
+  },
+  {
+   "id": "gem",
+   "name": "Gem of True Sight"
+  },
+  {
+   "id": "lifesteal",
+   "name": "Morbid Mask"
+  },
+  {
+   "id": "cloak",
+   "name": "Cloak"
+  },
+  {
+   "id": "chasm_stone",
+   "name": "Chasm Stone"
+  },
+  {
+   "id": "blink",
+   "name": "Blink Dagger"
+  },
+  {
+   "id": "ring_of_health",
+   "name": "Ring of Health"
+  },
+  {
+   "id": "void_stone",
+   "name": "Void Stone"
+  },
+  {
+   "id": "talisman_of_evasion",
+   "name": "Talisman of Evasion"
+  },
+  {
+   "id": "platemail",
+   "name": "Platemail"
+  },
+  {
+   "id": "ring_of_tarrasque",
+   "name": "Ring of Tarrasque"
+  },
+  {
+   "id": "tiara_of_selemene",
+   "name": "Tiara of Selemene"
+  },
+  {
+   "id": "hyperstone",
+   "name": "Hyperstone"
+  },
+  {
+   "id": "demon_edge",
+   "name": "Demon Edge"
+  },
+  {
+   "id": "vitality_booster",
+   "name": "Vitality Booster"
+  },
+  {
+   "id": "energy_booster",
+   "name": "Energy Booster"
+  },
+  {
+   "id": "point_booster",
+   "name": "Point Booster"
+  },
+  {
+   "id": "relic",
+   "name": "Sacred Relic"
+  },
+  {
+   "id": "reaver",
+   "name": "Reaver"
+  },
+  {
+   "id": "eagle",
+   "name": "Eaglesong"
+  },
+  {
+   "id": "mystic_staff",
+   "name": "Mystic Staff"
+  },
+  {
+   "id": "ultimate_orb",
+   "name": "Ultimate Orb"
+  },
+  {
+   "id": "magic_wand",
+   "name": "Magic Wand"
+  },
+  {
+   "id": "bracer",
+   "name": "Bracer"
+  },
+  {
+   "id": "wraith_band",
+   "name": "Wraith Band"
+  },
+  {
+   "id": "null_talisman",
+   "name": "Null Talisman"
+  },
+  {
+   "id": "power_treads",
+   "name": "Power Treads"
+  },
+  {
+   "id": "soul_ring",
+   "name": "Soul Ring"
+  },
+  {
+   "id": "orb_of_corrosion",
+   "name": "Orb of Corrosion"
+  },
+  {
+   "id": "falcon_blade",
+   "name": "Falcon Blade"
+  },
+  {
+   "id": "phase_boots",
+   "name": "Phase Boots"
+  },
+  {
+   "id": "pers",
+   "name": "Perseverance"
+  },
+  {
+   "id": "mask_of_madness",
+   "name": "Mask of Madness"
+  },
+  {
+   "id": "oblivion_staff",
+   "name": "Oblivion Staff"
+  },
+  {
+   "id": "travel_boots",
+   "name": "Boots of Travel"
+  },
+  {
+   "id": "hand_of_midas",
+   "name": "Hand of Midas"
+  },
+  {
+   "id": "moon_shard",
+   "name": "Moon Shard"
+  },
+  {
+   "id": "soul_booster",
+   "name": "Soul Booster"
+  },
+  {
+   "id": "ring_of_basilius",
+   "name": "Ring of Basilius"
+  },
+  {
+   "id": "headdress",
+   "name": "Headdress"
+  },
+  {
+   "id": "urn_of_shadows",
+   "name": "Urn of Shadows"
+  },
+  {
+   "id": "tranquil_boots",
+   "name": "Tranquil Boots"
+  },
+  {
+   "id": "arcane_boots",
+   "name": "Arcane Boots"
+  },
+  {
+   "id": "mekansm",
+   "name": "Mekansm"
+  },
+  {
+   "id": "essence_distiller",
+   "name": "Essence Distiller"
+  },
+  {
+   "id": "ancient_janggo",
+   "name": "Drum of Endurance"
+  },
+  {
+   "id": "pavise",
+   "name": "Pavise"
+  },
+  {
+   "id": "guardian_greaves",
+   "name": "Guardian Greaves"
+  },
+  {
+   "id": "spirit_vessel",
+   "name": "Spirit Vessel"
+  },
+  {
+   "id": "boots_of_bearing",
+   "name": "Boots of Bearing"
+  },
+  {
+   "id": "solar_crest",
+   "name": "Solar Crest"
+  },
+  {
+   "id": "glimmer_cape",
+   "name": "Glimmer Cape"
+  },
+  {
+   "id": "holy_locket",
+   "name": "Holy Locket"
+  },
+  {
+   "id": "pipe",
+   "name": "Pipe of Insight"
+  },
+  {
+   "id": "veil_of_discord",
+   "name": "Veil of Discord"
+  },
+  {
+   "id": "rod_of_atos",
+   "name": "Rod of Atos"
+  },
+  {
+   "id": "cyclone",
+   "name": "Eul's Scepter of Divinity"
+  },
+  {
+   "id": "phylactery",
+   "name": "Phylactery"
+  },
+  {
+   "id": "bloodstone",
+   "name": "Bloodstone"
+  },
+  {
+   "id": "gungir",
+   "name": "Gleipnir"
+  },
+  {
+   "id": "wind_waker",
+   "name": "Wind Waker"
+  },
+  {
+   "id": "angels_demise",
+   "name": "Khanda"
+  },
+  {
+   "id": "force_staff",
+   "name": "Force Staff"
+  },
+  {
+   "id": "aether_lens",
+   "name": "Aether Lens"
+  },
+  {
+   "id": "meteor_hammer",
+   "name": "Meteor Hammer"
+  },
+  {
+   "id": "dagon",
+   "name": "Dagon"
+  },
+  {
+   "id": "ultimate_scepter",
+   "name": "Aghanim's Scepter"
+  },
+  {
+   "id": "crellas_crozier",
+   "name": "Crella's Crozier"
+  },
+  {
+   "id": "octarine_core",
+   "name": "Octarine Core"
+  },
+  {
+   "id": "orchid",
+   "name": "Orchid Malevolence"
+  },
+  {
+   "id": "refresher",
+   "name": "Refresher Orb"
+  },
+  {
+   "id": "ethereal_blade",
+   "name": "Ethereal Blade"
+  },
+  {
+   "id": "sheepstick",
+   "name": "Scythe of Vyse"
+  },
+  {
+   "id": "bloodthorn",
+   "name": "Bloodthorn"
+  },
+  {
+   "id": "buckler",
+   "name": "Buckler"
+  },
+  {
+   "id": "vanguard",
+   "name": "Vanguard"
+  },
+  {
+   "id": "blade_mail",
+   "name": "Blade Mail"
+  },
+  {
+   "id": "helm_of_the_dominator",
+   "name": "Helm of the Dominator"
+  },
+  {
+   "id": "vladmir",
+   "name": "Vladmir's Offering"
+  },
+  {
+   "id": "crimson_guard",
+   "name": "Crimson Guard"
+  },
+  {
+   "id": "armlet",
+   "name": "Armlet of Mordiggian"
+  },
+  {
+   "id": "helm_of_the_overlord",
+   "name": "Helm of the Overlord"
+  },
+  {
+   "id": "consecrated_wraps",
+   "name": "Consecrated Wraps"
+  },
+  {
+   "id": "aeon_disk",
+   "name": "Aeon Disk"
+  },
+  {
+   "id": "lotus_orb",
+   "name": "Lotus Orb"
+  },
+  {
+   "id": "black_king_bar",
+   "name": "Black King Bar"
+  },
+  {
+   "id": "shivas_guard",
+   "name": "Shiva's Guard"
+  },
+  {
+   "id": "sphere",
+   "name": "Linken's Sphere"
+  },
+  {
+   "id": "assault",
+   "name": "Assault Cuirass"
+  },
+  {
+   "id": "heart",
+   "name": "Heart of Tarrasque"
+  },
+  {
+   "id": "lesser_crit",
+   "name": "Crystalys"
+  },
+  {
+   "id": "mage_slayer",
+   "name": "Mage Slayer"
+  },
+  {
+   "id": "heavens_halberd",
+   "name": "Heaven's Halberd"
+  },
+  {
+   "id": "desolator",
+   "name": "Desolator"
+  },
+  {
+   "id": "revenants_brooch",
+   "name": "Revenant's Brooch"
+  },
+  {
+   "id": "basher",
+   "name": "Skull Basher"
+  },
+  {
+   "id": "maelstrom",
+   "name": "Maelstrom"
+  },
+  {
+   "id": "invis_sword",
+   "name": "Shadow Blade"
+  },
+  {
+   "id": "greater_crit",
+   "name": "Daedalus"
+  },
+  {
+   "id": "abyssal_blade",
+   "name": "Abyssal Blade"
+  },
+  {
+   "id": "mjollnir",
+   "name": "Mjollnir"
+  },
+  {
+   "id": "silver_edge",
+   "name": "Silver Edge"
+  },
+  {
+   "id": "bfury",
+   "name": "Battle Fury"
+  },
+  {
+   "id": "nullifier",
+   "name": "Nullifier"
+  },
+  {
+   "id": "manta",
+   "name": "Manta Style"
+  },
+  {
+   "id": "radiance",
+   "name": "Radiance"
+  },
+  {
+   "id": "rapier",
+   "name": "Divine Rapier"
+  },
+  {
+   "id": "monkey_king_bar",
+   "name": "Monkey King Bar"
+  },
+  {
+   "id": "butterfly",
+   "name": "Butterfly"
+  },
+  {
+   "id": "satanic",
+   "name": "Satanic"
+  },
+  {
+   "id": "sange",
+   "name": "Sange"
+  },
+  {
+   "id": "yasha",
+   "name": "Yasha"
+  },
+  {
+   "id": "kaya",
+   "name": "Kaya"
+  },
+  {
+   "id": "dragon_lance",
+   "name": "Dragon Lance"
+  },
+  {
+   "id": "kaya_and_sange",
+   "name": "Kaya and Sange"
+  },
+  {
+   "id": "sange_and_yasha",
+   "name": "Sange and Yasha"
+  },
+  {
+   "id": "yasha_and_kaya",
+   "name": "Yasha and Kaya"
+  },
+  {
+   "id": "hurricane_pike",
+   "name": "Hurricane Pike"
+  },
+  {
+   "id": "echo_sabre",
+   "name": "Echo Sabre"
+  },
+  {
+   "id": "diffusal_blade",
+   "name": "Diffusal Blade"
+  },
+  {
+   "id": "witch_blade",
+   "name": "Witch Blade"
+  },
+  {
+   "id": "specialists_array",
+   "name": "Specialist's Array"
+  },
+  {
+   "id": "harpoon",
+   "name": "Harpoon"
+  },
+  {
+   "id": "disperser",
+   "name": "Disperser"
+  },
+  {
+   "id": "devastator",
+   "name": "Parasma"
+  },
+  {
+   "id": "hydras_breath",
+   "name": "Hydra's Breath"
+  },
+  {
+   "id": "overwhelming_blink",
+   "name": "Overwhelming Blink"
+  },
+  {
+   "id": "swift_blink",
+   "name": "Swift Blink"
+  },
+  {
+   "id": "arcane_blink",
+   "name": "Arcane Blink"
+  },
+  {
+   "id": "skadi",
+   "name": "Eye of Skadi"
+  }
+ ]
+}

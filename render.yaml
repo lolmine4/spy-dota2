@@ -1,0 +1,12 @@
+services:
+  - type: web
+    runtime: node
+    name: dota-spy
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
